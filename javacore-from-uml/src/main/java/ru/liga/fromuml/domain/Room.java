@@ -6,7 +6,7 @@ public abstract class Room {
     private double length;
     private double width;
 
-    public double perimetr() {
+    public double area() {
         return length * width;
     }
 
