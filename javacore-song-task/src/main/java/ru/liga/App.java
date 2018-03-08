@@ -3,6 +3,8 @@ package ru.liga;
 import ru.liga.songtask.content.Content;
 import ru.liga.songtask.domain.SimpleMidiFile;
 
+import java.util.Map;
+
 /**
  * Всего нот: 15
  * <p>
@@ -30,7 +32,22 @@ import ru.liga.songtask.domain.SimpleMidiFile;
 public class App {
     public static void main(String[] args) {
         SimpleMidiFile simpleMidiFile = new SimpleMidiFile(Content.ZOMBIE);
-        System.out.println("Количество нот: " + simpleMidiFile.vocalNoteList().size());
-        System.out.println("Длительность (сек): " + simpleMidiFile.durationMs() / 1000);
+        System.out.println("Всего нот: " + simpleMidiFile.vocalNoteList().size());
+        //System.out.println("Длительность (сек): " + simpleMidiFile.durationMs() / 1000);
+        System.out.println("<p>");
+        System.out.println("Анализ диапазона:");
+        System.out.println("верхняя: " + simpleMidiFile.getHighestNote().sign().fullName());
+        System.out.println("нижняя: " + simpleMidiFile.getLowestNote().sign().fullName());
+        System.out.println("диапазон: " + simpleMidiFile.getRangeNotes());
+        System.out.println("<p>");
+        System.out.println("Анализ длительности нот (мс):");
+
+        for(Map.Entry<Long,Integer> duration : simpleMidiFile.analyzeDuration().entrySet()){
+            System.out.println(duration.getKey() + ": " + duration.getValue());
+        }
+
+        System.out.println("<p>");
+        System.out.println("Анализ нот по высоте:");
+
     }
 }

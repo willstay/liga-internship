@@ -12,9 +12,7 @@ import org.jasypt.contrib.org.apache.commons.codec_1_3.binary.Base64;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 
 /**
@@ -160,5 +158,59 @@ public class SimpleMidiFile {
         return (long) (midiFile.getLengthInTicks() * tickInMs());
     }
 
+    public Note getLowestNote(){
+        List<Note> sortedList = noteList(0);
+        sortByFrequencyHz(sortedList);
+
+        return sortedList.get(0);
+    }
+
+    public Note getHighestNote(){
+        List<Note> sortedList = noteList(0);
+        sortByFrequencyHz(sortedList);
+
+        return sortedList.get(sortedList.size()-1);
+    }
+
+    public int getRangeNotes(){
+        List<Note> sortedList = noteList(0);
+        HashSet<String> noteSet = new HashSet<>();
+        for(Note note : sortedList){
+            noteSet.add(note.sign().fullName());
+        }
+        return noteSet.size();
+    }
+
+    public Map<Long,Integer> analyzeDuration(){
+        List<Note> sortedList = noteList(0);
+
+        Map<Long, Integer> analyzeMap = new TreeMap<>(Collections.reverseOrder());
+        for(Note note : sortedList){
+            if(!analyzeMap.containsKey(note.durationTicks())){
+                analyzeMap.put(note.durationTicks(),1);
+            } else {
+                analyzeMap.put(note.durationTicks(),analyzeMap.get(note.durationTicks())+1);
+            }
+        }
+
+        return analyzeMap;
+    }
+//    public Map<String,Integer> analyzeNotes(){
+//        List<Note> sortedList = noteList(0);
+//        sortByFrequencyHz(sortedList);
+//        List<String> notesString = new ArrayList<>();
+//        for(Note note : sortedList){
+//            notesString.add(note.sign().fullName());
+//        }
+//    }
+
+    public void sortByFrequencyHz(List<Note> notesList){
+        notesList.sort((o1, o2) -> {
+            if(o1.sign().getFrequencyHz() == o2.sign().getFrequencyHz()){
+                return 0;
+            }
+            return (o1.sign().getFrequencyHz() < o2.sign().getFrequencyHz()) ? -1 : 1;
+        });
+    }
 
 }
