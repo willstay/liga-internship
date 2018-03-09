@@ -1,6 +1,7 @@
 package ru.liga;
 
 import ru.liga.songtask.content.Content;
+import ru.liga.songtask.domain.Note;
 import ru.liga.songtask.domain.SimpleMidiFile;
 
 import java.util.Map;
@@ -49,5 +50,15 @@ public class App {
         System.out.println("<p>");
         System.out.println("Анализ нот по высоте:");
 
+        for(Map.Entry<Note,Integer> note : simpleMidiFile.analyzeNotes().entrySet()){
+            System.out.println(note.getKey().sign().fullName() + ": " + note.getValue());
+        }
+
+        System.out.println("<p>");
+        System.out.println("Анализ интервалов:");
+
+        for(Map.Entry<Integer,Integer> note : simpleMidiFile.analyzeIntervals().entrySet()){
+            System.out.println(note.getKey() + ": " + note.getValue());
+        }
     }
 }
