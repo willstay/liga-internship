@@ -21,20 +21,6 @@ import java.util.*;
 public class SimpleMidiFile {
     private MidiFile midiFile;
 
-    public static final Comparator<Note> NOTE_COMPARATOR = (o1, o2) -> {
-        if(o1.sign().getFrequencyHz() == o2.sign().getFrequencyHz()){
-            return 0;
-        }
-        return o1.sign().lower(o2.sign()) ? -1 : 1;
-    };
-
-    public static final Comparator<Note> NOTE_COMPARATOR_REVERSE = (o1, o2) -> {
-        if(o1.sign().getFrequencyHz() == o2.sign().getFrequencyHz()){
-            return 0;
-        }
-        return o1.sign().higher(o2.sign()) ? -1 : 1;
-    };
-
     public SimpleMidiFile(String base64EncodedString) {
         try {
             InputStream is = new ByteArrayInputStream(Base64.decodeBase64(base64EncodedString.getBytes()));
@@ -172,76 +158,4 @@ public class SimpleMidiFile {
     public Long durationMs() {
         return (long) (midiFile.getLengthInTicks() * tickInMs());
     }
-
-    public Note getLowestNote(){
-        List<Note> sortedList = noteList(0);
-        sortedList.sort(NOTE_COMPARATOR);
-        return sortedList.get(0);
-    }
-
-    public Note getHighestNote(){
-        List<Note> sortedList = noteList(0);
-        sortedList.sort(NOTE_COMPARATOR_REVERSE);
-        return sortedList.get(0);
-    }
-
-    public int getRangeNotes(){
-        List<Note> sortedList = noteList(0);
-        HashSet<String> noteSet = new HashSet<>();
-        for(Note note : sortedList){
-            noteSet.add(note.sign().fullName());
-        }
-        return noteSet.size();
-    }
-
-    public Map<Long,Integer> analyzeDuration(){
-        List<Note> sortedList = noteList(0);
-        Map<Long, Integer> analyzeMap = new TreeMap<>(Collections.reverseOrder());
-
-        for(Note note : sortedList){
-            if(!analyzeMap.containsKey(note.durationTicks())){
-                analyzeMap.put(note.durationTicks(),1);
-            } else {
-                analyzeMap.put(note.durationTicks(),analyzeMap.get(note.durationTicks())+1);
-            }
-        }
-
-        return analyzeMap;
-    }
-    public Map<Note,Integer> analyzeNotes(){
-        List<Note> sortedList = noteList(0);
-        Map<Note,Integer> analyzeMap = new TreeMap<>(NOTE_COMPARATOR_REVERSE);
-
-        for(Note note : sortedList){
-            if(!analyzeMap.containsKey(note)){
-                analyzeMap.put(note,1);
-            } else {
-                analyzeMap.put(note,analyzeMap.get(note)+1);
-            }
-        }
-
-        return analyzeMap;
-    }
-
-    public Map<Integer,Integer> analyzeIntervals(){
-        List<Note> sortedList = noteList(0);
-        List<Integer> intervalList = new ArrayList<>();
-
-        for(int i = 0; i < sortedList.size() - 1; i++){
-            intervalList.add(sortedList.get(i).sign().diffInSemitones(sortedList.get(i + 1).sign()));
-        }
-
-        Map<Integer,Integer> analyzeMap = new TreeMap<>();
-
-        for(Integer interval : intervalList){
-            if(!analyzeMap.containsKey(interval)){
-                analyzeMap.put(interval,1);
-            } else {
-                analyzeMap.put(interval,analyzeMap.get(interval)+1);
-            }
-        }
-
-        return analyzeMap;
-    }
-
 }
