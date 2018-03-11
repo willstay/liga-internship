@@ -42,10 +42,10 @@ public class NotesAnalyzer {
     }
 
     public Map<Long,Integer> analyzeDuration(){
-        List<Note> sortedList = new ArrayList<>(notesList);
+        List<Note> notesListCopy = new ArrayList<>(notesList);
         Map<Long, Integer> durationMap = new TreeMap<>(Collections.reverseOrder());
 
-        for(Note note : sortedList){
+        for(Note note : notesListCopy){
             if(!durationMap.containsKey(note.durationTicks())){
                 durationMap.put(note.durationTicks(),1);
             } else {
