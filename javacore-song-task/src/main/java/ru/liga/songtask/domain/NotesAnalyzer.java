@@ -5,14 +5,14 @@ import java.util.*;
 public class NotesAnalyzer {
     private List<Note> notesList;
 
-    private static final Comparator<Note> NOTE_COMPARATOR = (o1, o2) -> {
+    private static final Comparator<Note> NOTE_COMPARATOR_FREQUENCY = (o1, o2) -> {
         if(o1.sign().getFrequencyHz().equals(o2.sign().getFrequencyHz())){
             return 0;
         }
         return o1.sign().lower(o2.sign()) ? -1 : 1;
     };
 
-    private static final Comparator<Note> NOTE_COMPARATOR_REVERSE = (o1, o2) -> {
+    private static final Comparator<Note> NOTE_COMPARATOR_FREQUENCY_REVERSE = (o1, o2) -> {
         if(o1.sign().getFrequencyHz().equals(o2.sign().getFrequencyHz())){
             return 0;
         }
@@ -25,13 +25,13 @@ public class NotesAnalyzer {
 
     public Note getLowestNote(){
         List<Note> notesListCopy = new ArrayList<>(notesList);
-        notesListCopy.sort(NOTE_COMPARATOR);
+        notesListCopy.sort(NOTE_COMPARATOR_FREQUENCY);
         return notesListCopy.get(0);
     }
 
     public Note getHighestNote(){
         List<Note> notesListCopy = new ArrayList<>(notesList);
-        notesListCopy.sort(NOTE_COMPARATOR_REVERSE);
+        notesListCopy.sort(NOTE_COMPARATOR_FREQUENCY_REVERSE);
         return notesListCopy.get(0);
     }
 
@@ -58,7 +58,7 @@ public class NotesAnalyzer {
 
     public Map<Note,Integer> analyzeNotesHeight(){
         List<Note> notesListCopy = new ArrayList<>(notesList);
-        Map<Note,Integer> notesHeightMap = new TreeMap<>(NOTE_COMPARATOR_REVERSE);
+        Map<Note,Integer> notesHeightMap = new TreeMap<>(NOTE_COMPARATOR_FREQUENCY_REVERSE);
 
         for(Note note : notesListCopy){
             if(!notesHeightMap.containsKey(note)){
