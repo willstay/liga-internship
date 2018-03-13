@@ -1,11 +1,10 @@
 package ru.liga;
 
-import ru.liga.songtask.content.Content;
-import ru.liga.songtask.domain.Note;
-import ru.liga.songtask.domain.NotesAnalyzer;
-import ru.liga.songtask.domain.SimpleMidiFile;
-
-import java.util.Map;
+import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
+import ru.liga.songtask.domain.DoAnalyze;
+import ru.liga.songtask.domain.PrintToConsole;
+import ru.liga.songtask.domain.PrintToFile;
 
 /**
  * Всего нот: 15
@@ -31,36 +30,17 @@ import java.util.Map;
  * 5: 3
  * 11: 2
  */
+@Slf4j
+@EqualsAndHashCode
 public class App {
     public static void main(String[] args) {
-        SimpleMidiFile simpleMidiFile = new SimpleMidiFile(Content.ZOMBIE);
-        NotesAnalyzer notesAnalyzer = new NotesAnalyzer(simpleMidiFile.vocalNoteList());
-        System.out.println("Всего нот: " + notesAnalyzer.size());
-        //System.out.println("Длительность (сек): " + simpleMidiFile.durationMs() / 1000);
-        System.out.println("<p>");
-        System.out.println("Анализ диапазона:");
-        System.out.println("верхняя: " + notesAnalyzer.getHighestNote().sign().fullName());
-        System.out.println("нижняя: " + notesAnalyzer.getLowestNote().sign().fullName());
-        System.out.println("диапазон: " + notesAnalyzer.getRangeNotes());
-        System.out.println("<p>");
-        System.out.println("Анализ длительности нот (мс):");
+        PrintToFile printToFile = new PrintToFile("output.txt", DoAnalyze.analyze());
+        printToFile.print();
 
-        for(Map.Entry<Long,Integer> duration : notesAnalyzer.analyzeDuration().entrySet()){
-            System.out.println(Math.round(duration.getKey() * simpleMidiFile.tickInMs()) + ": " + duration.getValue());
-        }
+        PrintToConsole printToConsole = new PrintToConsole(DoAnalyze.analyze());
+        printToConsole.print();
 
-        System.out.println("<p>");
-        System.out.println("Анализ нот по высоте:");
+        log.info(DoAnalyze.analyze());
 
-        for(Map.Entry<Note,Integer> note : notesAnalyzer.analyzeNotesHeight().entrySet()){
-            System.out.println(note.getKey().sign().fullName() + ": " + note.getValue());
-        }
-
-        System.out.println("<p>");
-        System.out.println("Анализ интервалов:");
-
-        for(Map.Entry<Integer,Integer> note : notesAnalyzer.analyzeIntervals().entrySet()){
-            System.out.println(note.getKey() + ": " + note.getValue());
-        }
     }
 }
