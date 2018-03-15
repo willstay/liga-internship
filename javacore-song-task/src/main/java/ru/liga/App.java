@@ -48,7 +48,7 @@ public class App {
                 return;
             }
         }
-        if(args[1].equals("change")){
+        if(args[1].equals("change") && args[2].equals("-trans") && args[4].equals("-tempo")){
             String outputName = args[0].substring(0,args[0].length() - 4);
             outputName += args[2].toString() + args[3].toString() + args[4].toString() + args[5].toString() + ".mid";
 
