@@ -1,5 +1,5 @@
 package ru.liga.songtask.printer;
 
 public interface Print {
-    void print();
+    void print(String stringToPrint);
 }

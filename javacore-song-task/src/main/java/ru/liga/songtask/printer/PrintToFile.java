@@ -1,19 +1,15 @@
 package ru.liga.songtask.printer;
 
-import ru.liga.songtask.printer.Print;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 public class PrintToFile implements Print {
-    String fileName;
-    String stringToPrint;
-    public PrintToFile(String fileName, String stringToPrint){
+    private final String fileName;
+    public PrintToFile(String fileName){
         this.fileName = fileName;
-        this.stringToPrint = stringToPrint;
     }
-    public void print(){
+    public void print(String stringToPrint){
         try (PrintStream out = new PrintStream(new FileOutputStream(fileName))) {
             out.print(stringToPrint);
         } catch (FileNotFoundException e) {

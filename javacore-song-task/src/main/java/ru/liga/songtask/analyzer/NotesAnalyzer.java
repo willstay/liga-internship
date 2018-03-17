@@ -5,7 +5,7 @@ import ru.liga.songtask.domain.Note;
 import java.util.*;
 
 public class NotesAnalyzer {
-    private List<Note> notesList;
+    private final List<Note> notesList;
 
     private static final Comparator<Note> NOTE_COMPARATOR_FREQUENCY = (o1, o2) -> {
         if(o1.sign().getFrequencyHz().equals(o2.sign().getFrequencyHz())){

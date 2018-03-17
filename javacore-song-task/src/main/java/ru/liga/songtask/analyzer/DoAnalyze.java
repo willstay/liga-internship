@@ -1,7 +1,7 @@
 package ru.liga.songtask.analyzer;
 
 import ru.liga.songtask.domain.Note;
-import ru.liga.songtask.domain.Resources;
+import ru.liga.songtask.resources.Resources;
 import ru.liga.songtask.domain.SimpleMidiFile;
 
 import java.util.Map;

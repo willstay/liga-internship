@@ -1,4 +1,4 @@
-package ru.liga.songtask.domain;
+package ru.liga.songtask.resources;
 
 import java.io.File;
 import java.net.URI;
@@ -11,8 +11,7 @@ public class Resources {
     }
     public File getFile(){
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(fileName).getFile());
-        return file;
+        return new File(classLoader.getResource(fileName).getFile());
     }
     public URI getUri() throws URISyntaxException{
         ClassLoader classLoader = getClass().getClassLoader();

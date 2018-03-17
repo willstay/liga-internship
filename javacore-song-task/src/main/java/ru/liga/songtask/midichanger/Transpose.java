@@ -1,4 +1,4 @@
-package ru.liga.songtask.domain;
+package ru.liga.songtask.midichanger;
 
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
@@ -6,13 +6,13 @@ import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.meta.Tempo;
+import ru.liga.songtask.resources.Resources;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class Transpose {
-    MidiFile midiFile;
+    private MidiFile midiFile;
     public Transpose(String fileName){
         try {
             midiFile = new MidiFile(new Resources(fileName).getFile());

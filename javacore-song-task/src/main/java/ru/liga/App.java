@@ -3,7 +3,7 @@ package ru.liga;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import ru.liga.songtask.analyzer.DoAnalyze;
-import ru.liga.songtask.domain.*;
+import ru.liga.songtask.midichanger.Transpose;
 import ru.liga.songtask.printer.Print;
 import ru.liga.songtask.printer.PrintToFile;
 
@@ -41,8 +41,8 @@ public class App {
                 return;
             }
             if(args.length == 3 & args[2].equals("-f")){
-                Print printToFile = new PrintToFile(args[0] + ".txt", DoAnalyze.analyze(args[0]));
-                printToFile.print();
+                Print printToFile = new PrintToFile(args[0] + ".txt");
+                printToFile.print(DoAnalyze.analyze(args[0]));
                 return;
             }
         }
