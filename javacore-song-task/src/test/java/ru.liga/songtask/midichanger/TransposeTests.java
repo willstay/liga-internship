@@ -19,7 +19,7 @@ public class TransposeTests {
     private String fileNameChanged = "zombieTest.mid";
     private Transpose transpose = new Transpose(fileName);
     @Test
-    public void ChangeTempoTest(){
+    public void changeTempoTest(){
         int tempoChange = 20;
         transpose.changeTempo(tempoChange);
         transpose.toFile(fileNameChanged);
@@ -43,7 +43,7 @@ public class TransposeTests {
     }
 
     @Test
-    public void ChangeToneTest(){
+    public void changeToneTest(){
         int tone = 20;
         transpose.changeTone(tone);
         transpose.toFile(fileNameChanged);
