@@ -1,4 +1,6 @@
-package ru.liga.songtask.domain;
+package ru.liga.songtask.printer;
+
+import ru.liga.songtask.printer.Print;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

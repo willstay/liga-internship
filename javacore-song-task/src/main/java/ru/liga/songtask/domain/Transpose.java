@@ -14,7 +14,6 @@ import java.util.List;
 public class Transpose {
     MidiFile midiFile;
     public Transpose(String fileName){
-
         try {
             midiFile = new MidiFile(new Resources(fileName).getFile());
         } catch (IOException e) {

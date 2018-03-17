@@ -1,4 +1,6 @@
-package ru.liga.songtask.domain;
+package ru.liga.songtask.analyzer;
+
+import ru.liga.songtask.domain.Note;
 
 import java.util.*;
 

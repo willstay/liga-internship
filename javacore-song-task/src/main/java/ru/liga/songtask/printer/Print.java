@@ -1,4 +1,4 @@
-package ru.liga.songtask.domain;
+package ru.liga.songtask.printer;
 
 public interface Print {
     void print();

@@ -1,13 +1,11 @@
 package ru.liga;
 
-import com.leff.midi.MidiTrack;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
-import ru.liga.songtask.content.Content;
+import ru.liga.songtask.analyzer.DoAnalyze;
 import ru.liga.songtask.domain.*;
-
-import java.io.File;
-import java.io.IOException;
+import ru.liga.songtask.printer.Print;
+import ru.liga.songtask.printer.PrintToFile;
 
 /**
  * Всего нот: 15
