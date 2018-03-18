@@ -17,6 +17,10 @@ public class AnalyzeTests {
         assertThat(notesAnalyzer.getLowestNote().sign().fullName()).isEqualTo("E4");
     }
     @Test
+    public void getHighestNoteTest(){
+        assertThat(notesAnalyzer.getHighestNote().sign().fullName()).isEqualTo("A5");
+    }
+    @Test
     public void numberOfNotesTest(){
         assertThat(notesAnalyzer.size()).isEqualTo(289);
     }

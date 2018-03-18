@@ -14,13 +14,6 @@ public class NotesAnalyzer {
         return o1.sign().lower(o2.sign()) ? -1 : 1;
     };
 
-    private static final Comparator<Note> NOTE_COMPARATOR_FREQUENCY_REVERSE = (o1, o2) -> {
-        if(o1.sign().getFrequencyHz().equals(o2.sign().getFrequencyHz())){
-            return 0;
-        }
-        return o1.sign().higher(o2.sign()) ? -1 : 1;
-    };
-
     public NotesAnalyzer(List<Note> notesList) {
         this.notesList = notesList;
     }
@@ -33,7 +26,7 @@ public class NotesAnalyzer {
 
     public Note getHighestNote(){
         List<Note> notesListCopy = new ArrayList<>(notesList);
-        notesListCopy.sort(NOTE_COMPARATOR_FREQUENCY_REVERSE);
+        notesListCopy.sort(NOTE_COMPARATOR_FREQUENCY.reversed());
         return notesListCopy.get(0);
     }
 
@@ -60,7 +53,7 @@ public class NotesAnalyzer {
 
     public Map<Note,Integer> analyzeNotesHeight(){
         List<Note> notesListCopy = new ArrayList<>(notesList);
-        Map<Note,Integer> notesHeightMap = new TreeMap<>(NOTE_COMPARATOR_FREQUENCY_REVERSE);
+        Map<Note,Integer> notesHeightMap = new TreeMap<>(NOTE_COMPARATOR_FREQUENCY.reversed());
 
         for(Note note : notesListCopy){
             if(!notesHeightMap.containsKey(note)){

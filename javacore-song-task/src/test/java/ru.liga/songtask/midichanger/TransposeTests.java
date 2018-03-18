@@ -49,7 +49,6 @@ public class TransposeTests {
         transpose.toFile(fileNameChanged);
 
         SimpleMidiFile simpleMidiFile = new SimpleMidiFile(new Resources(fileName).getFile());
-
         SimpleMidiFile simpleMidiFileTest = new SimpleMidiFile(new File(fileNameChanged));
 
         assertThat(simpleMidiFileTest.noteList(0).get(0).sign().getMidi()).isEqualTo(
