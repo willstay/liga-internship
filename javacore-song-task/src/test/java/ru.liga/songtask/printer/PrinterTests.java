@@ -18,14 +18,15 @@ public class PrinterTests {
     private String filePath2 = "test2.txt";
 
     @Test
-    public void  When_CreateNewFilePrint_Expect_NewFile_Testtxt (){
+    public void When_CreateNewFilePrint_Expect_NewFile_Testtxt() {
         Print print = new PrintToFile(filePath);
         print.print(text);
         File file = new File(filePath);
         assertThat(file.exists()).isEqualTo(true);
     }
+
     @Test
-    public void  When_PrintToFileText_Expect_Text_In_Test2txt(){
+    public void When_PrintToFileText_Expect_Text_In_Test2txt() {
         Print print = new PrintToFile(filePath2);
         print.print(text);
         Path path = Paths.get(filePath2);
