@@ -8,6 +8,10 @@ import ru.liga.songtask.printer.PrintToFile;
 @Slf4j
 public class Parser {
     public static void parse(String [] args){
+        if (args.length == 0) {
+            return;
+        }
+
         if(args[1].equals("analyze")){
             if(args.length == 2){
                 log.info(DoAnalyze.analyze(args[0]));

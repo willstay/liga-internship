@@ -46,6 +46,9 @@ public class Transpose {
             }
         }
     }
+    public MidiFile getMidiFile(){
+        return midiFile;
+    }
     public void toFile(String fileName){
         try {
             midiFile.writeToFile(new File(fileName));

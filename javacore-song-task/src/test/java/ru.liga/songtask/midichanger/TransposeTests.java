@@ -16,22 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TransposeTests {
     private String fileName = "zombie.mid";
-    private String fileNameChanged = "zombieTest.mid";
     private Transpose transpose = new Transpose(fileName);
     @Test
-    public void changeTempoTest(){
+    public void When_ChangeTempoOn20InZombieSong_Expect_BpmBecome98(){
         int tempoChange = 20;
         transpose.changeTempo(tempoChange);
-        transpose.toFile(fileNameChanged);
+        MidiFile midiFile = transpose.getMidiFile();
 
-        MidiFile midiFile;
-
-        try {
-            midiFile = new MidiFile(new File(fileNameChanged));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
         for(MidiTrack midiTrack : midiFile.getTracks()){
             for (MidiEvent midiEvent : midiTrack.getEvents()){
                 if (midiEvent instanceof Tempo){
@@ -43,15 +34,9 @@ public class TransposeTests {
     }
 
     @Test
-    public void changeToneTest(){
-        int tone = 20;
-        transpose.changeTone(tone);
-        transpose.toFile(fileNameChanged);
-
-        SimpleMidiFile simpleMidiFile = new SimpleMidiFile(new Resources(fileName).getFile());
-        SimpleMidiFile simpleMidiFileTest = new SimpleMidiFile(new File(fileNameChanged));
-
-        assertThat(simpleMidiFileTest.noteList(0).get(0).sign().getMidi()).isEqualTo(
-                simpleMidiFile.noteList(0).get(0).sign().getMidi() + 20);
+    public void  When_ChangeToneOn20InZombieSong_Expect_MidiBecome96InFirstNote(){
+        SimpleMidiFile simpleMidiFile = new SimpleMidiFile(transpose.getMidiFile());
+        transpose.changeTone(20);
+        assertThat(simpleMidiFile.noteList(0).get(0).sign().getMidi()).isEqualTo(96);
     }
 }

@@ -15,16 +15,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PrinterTests {
     private String text = "text";
     private String filePath = "test.txt";
-    private Print print = new PrintToFile(filePath);
+    private String filePath2 = "test2.txt";
+
     @Test
-    public void createFileTest(){
+    public void  When_CreateNewFilePrint_Expect_NewFile_Testtxt (){
+        Print print = new PrintToFile(filePath);
         print.print(text);
         File file = new File(filePath);
         assertThat(file.exists()).isEqualTo(true);
     }
     @Test
-    public void textOfFileTest(){
-        Path path = Paths.get(filePath);
+    public void  When_PrintToFileText_Expect_Text_In_Test2txt(){
+        Print print = new PrintToFile(filePath2);
+        print.print(text);
+        Path path = Paths.get(filePath2);
         List<String> testList = new ArrayList<>();
         try {
             testList = Files.readAllLines(path);

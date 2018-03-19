@@ -38,6 +38,10 @@ public class SimpleMidiFile {
         }
     }
 
+    public SimpleMidiFile(MidiFile midiFile) {
+        this.midiFile = midiFile;
+    }
+
     public List<Note> vocalNoteList() {
         return noteList(0);
     }
@@ -89,9 +93,6 @@ public class SimpleMidiFile {
     public MidiFile getMidiFormat() {
         return midiFile;
     }
-
-
-
 
 
     private List<Integer> createTransponationScheme(Integer toHighNoteCount, Integer toLowNoteCount) {
