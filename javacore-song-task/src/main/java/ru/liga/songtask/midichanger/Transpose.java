@@ -10,6 +10,7 @@ import ru.liga.songtask.resources.Resources;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class Transpose {
     private MidiFile midiFile;
@@ -22,29 +23,23 @@ public class Transpose {
     }
 
     public void changeTempo(int changeTempo){
-        for(MidiTrack midiTrack : midiFile.getTracks()){
-            for(MidiEvent midiEvent : midiTrack.getEvents()){
-                if(midiEvent instanceof Tempo){
-                    Tempo tempo = (Tempo)midiEvent;
-                    tempo.setBpm(tempo.getBpm() + tempo.getBpm() * changeTempo / 100);
-                }
-            }
-        }
+        midiFile.getTracks().stream()
+                .flatMap(midiTrack -> midiTrack.getEvents().stream())
+                .filter(midiEvent -> midiEvent instanceof Tempo)
+                .forEach(tempo -> ((Tempo) tempo)
+                        .setBpm(((Tempo) tempo).getBpm() + ((Tempo) tempo).getBpm() * changeTempo / 100));
     }
 
     public void changeTone(int tone){
-        for(MidiTrack midiTrack : midiFile.getTracks()){
-            for(MidiEvent midiEvent : midiTrack.getEvents()){
-                if(midiEvent instanceof NoteOn){
-                    NoteOn noteOn = (NoteOn)midiEvent;
-                    noteOn.setNoteValue(noteOn.getNoteValue() + tone);
-                }
-                if(midiEvent instanceof NoteOff){
-                    NoteOff NoteOff = (NoteOff)midiEvent;
-                    NoteOff.setNoteValue(NoteOff.getNoteValue() + tone);
-                }
-            }
-        }
+        midiFile.getTracks().stream()
+                .flatMap(midiTrack -> midiTrack.getEvents().stream())
+                .filter(midiEvent -> midiEvent instanceof NoteOn)
+                .forEach(noteOn -> ((NoteOn)noteOn).setNoteValue(((NoteOn)noteOn).getNoteValue() + tone));
+
+        midiFile.getTracks().stream()
+                .flatMap(midiTrack -> midiTrack.getEvents().stream())
+                .filter(midiEvent -> midiEvent instanceof NoteOff)
+                .forEach(noteOff -> ((NoteOff)noteOff).setNoteValue(((NoteOff)noteOff).getNoteValue() + tone));
     }
     public MidiFile getMidiFile(){
         return midiFile;

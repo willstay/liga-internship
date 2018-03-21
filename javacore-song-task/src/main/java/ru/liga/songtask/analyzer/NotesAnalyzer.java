@@ -3,6 +3,8 @@ package ru.liga.songtask.analyzer;
 import ru.liga.songtask.domain.Note;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class NotesAnalyzer {
     private final List<Note> notesList;
@@ -19,15 +21,15 @@ public class NotesAnalyzer {
     }
 
     public Note getLowestNote() {
-        List<Note> notesListCopy = new ArrayList<>(notesList);
-        notesListCopy.sort(NOTE_COMPARATOR_FREQUENCY);
-        return notesListCopy.get(0);
+        return notesList.stream()
+                .min(NOTE_COMPARATOR_FREQUENCY)
+                .get();
     }
 
     public Note getHighestNote() {
-        List<Note> notesListCopy = new ArrayList<>(notesList);
-        notesListCopy.sort(NOTE_COMPARATOR_FREQUENCY.reversed());
-        return notesListCopy.get(0);
+        return notesList.stream()
+                .max(NOTE_COMPARATOR_FREQUENCY)
+                .get();
     }
 
     public int getRangeNotes() {
@@ -37,38 +39,37 @@ public class NotesAnalyzer {
     }
 
     public Map<Long, Integer> analyzeDuration() {
-        List<Note> notesListCopy = new ArrayList<>(notesList);
-        Map<Long, Integer> durationMap = new TreeMap<>(Collections.reverseOrder());
-
-        for (Note note : notesListCopy) {
-            if (!durationMap.containsKey(note.durationTicks())) {
-                durationMap.put(note.durationTicks(), 1);
-            } else {
-                durationMap.put(note.durationTicks(), durationMap.get(note.durationTicks()) + 1);
-            }
-        }
-
-        return durationMap;
+         return notesList.stream()
+                .map(note -> note.durationTicks())
+                .collect(Collectors.toMap(
+                        i -> i,
+                        i -> 1,
+                        (u, u2) -> u + 1,
+                        TreeMap::new
+                )).descendingMap();
     }
 
     public Map<Note, Integer> analyzeNotesHeight() {
         List<Note> notesListCopy = new ArrayList<>(notesList);
         Map<Note, Integer> notesHeightMap = new TreeMap<>(NOTE_COMPARATOR_FREQUENCY.reversed());
 
-        for (Note note : notesListCopy) {
-            if (!notesHeightMap.containsKey(note)) {
-                notesHeightMap.put(note, 1);
-            } else {
-                notesHeightMap.put(note, notesHeightMap.get(note) + 1);
-            }
-        }
-
+        notesListCopy.stream()
+                .forEach(note -> {
+                    if (!notesHeightMap.containsKey(note)) {
+                        notesHeightMap.put(note, 1);
+                    } else {
+                        notesHeightMap.put(note, notesHeightMap.get(note) + 1);
+                    }
+                });
         return notesHeightMap;
     }
 
     public Map<Integer, Integer> analyzeIntervals() {
         List<Note> notesListCopy = new ArrayList<>(notesList);
         List<Integer> intervalList = new ArrayList<>();
+
+//        notesListCopy.stream()
+//                .map(note -> note.sign())
 
         for (int i = 0; i < notesListCopy.size() - 1; i++) {
             intervalList.add(notesListCopy.get(i).sign().diffInSemitones(

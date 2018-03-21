@@ -7,10 +7,6 @@ import com.leff.midi.event.meta.Tempo;
 import org.assertj.core.data.Percentage;
 import org.junit.Test;
 import ru.liga.songtask.domain.SimpleMidiFile;
-import ru.liga.songtask.resources.Resources;
-
-import java.io.File;
-import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
