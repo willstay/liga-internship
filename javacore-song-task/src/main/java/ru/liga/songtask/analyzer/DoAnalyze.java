@@ -7,9 +7,14 @@ import ru.liga.songtask.domain.SimpleMidiFile;
 import java.util.Map;
 
 public class DoAnalyze {
-    private final static StringBuilder stringBuilderOut = new StringBuilder();
+    private final StringBuilder stringBuilderOut = new StringBuilder();
+    private final String fileName;
 
-    public static String analyze(String fileName) {
+    public DoAnalyze(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String analyze() {
         SimpleMidiFile simpleMidiFile = new SimpleMidiFile(new Resources(fileName).getFile());
         NotesAnalyzer notesAnalyzer = new NotesAnalyzer(simpleMidiFile.vocalNoteList());
 
@@ -44,7 +49,7 @@ public class DoAnalyze {
         return stringBuilderOut.toString();
     }
 
-    private static void writeStringLn(String text) {
+    private void writeStringLn(String text) {
         stringBuilderOut.append(text).append(System.getProperty("line.separator"));
     }
 }

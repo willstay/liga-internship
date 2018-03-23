@@ -16,12 +16,12 @@ public class Parser {
 
         if (args[1].equals("analyze")) {
             if (args.length == 2) {
-                log.info(DoAnalyze.analyze(args[0]));
+                log.info(new DoAnalyze(args[0]).analyze());
                 return;
             }
             if (args.length == 3 & args[2].equals("-f")) {
                 Print printToFile = new PrintToFile(args[0] + ".txt");
-                printToFile.print(DoAnalyze.analyze(args[0]));
+                printToFile.print(new DoAnalyze(args[0]).analyze());
                 return;
             }
         }
