@@ -4,18 +4,19 @@ import ru.liga.songtask.domain.Note;
 import ru.liga.songtask.resources.Resources;
 import ru.liga.songtask.domain.SimpleMidiFile;
 
+import java.io.File;
 import java.util.Map;
 
 public class DoAnalyze {
     private final StringBuilder stringBuilderOut = new StringBuilder();
-    private final String fileName;
+    private final File fileToAnalyze;
 
-    public DoAnalyze(String fileName) {
-        this.fileName = fileName;
+    public DoAnalyze(File fileToAnalyze) {
+        this.fileToAnalyze = fileToAnalyze;
     }
 
     public String analyze() {
-        SimpleMidiFile simpleMidiFile = new SimpleMidiFile(new Resources(fileName).getFile());
+        SimpleMidiFile simpleMidiFile = new SimpleMidiFile(fileToAnalyze);
         NotesAnalyzer notesAnalyzer = new NotesAnalyzer(simpleMidiFile.vocalNoteList());
 
         writeStringLn("Всего нот: " + notesAnalyzer.size());

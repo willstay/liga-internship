@@ -5,6 +5,7 @@ import ru.liga.songtask.analyzer.DoAnalyze;
 import ru.liga.songtask.midichanger.Transpose;
 import ru.liga.songtask.printer.Print;
 import ru.liga.songtask.printer.PrintToFile;
+import ru.liga.songtask.resources.Resources;
 
 @Slf4j
 public class Parser {
@@ -16,12 +17,12 @@ public class Parser {
 
         if (args[1].equals("analyze")) {
             if (args.length == 2) {
-                log.info(new DoAnalyze(args[0]).analyze());
+                log.info(new DoAnalyze(new Resources(args[0]).getFile()).analyze());
                 return;
             }
             if (args.length == 3 & args[2].equals("-f")) {
                 Print printToFile = new PrintToFile(args[0] + ".txt");
-                printToFile.print(new DoAnalyze(args[0]).analyze());
+                printToFile.print(new DoAnalyze(new Resources(args[0]).getFile()).analyze());
                 return;
             }
         }
