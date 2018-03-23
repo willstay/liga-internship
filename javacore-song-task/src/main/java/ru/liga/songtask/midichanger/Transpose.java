@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 
 public class Transpose {
     private MidiFile midiFile;
-    public Transpose(String fileName){
+
+    public Transpose(String fileName) {
         try {
             midiFile = new MidiFile(new Resources(fileName).getFile());
         } catch (IOException e) {
@@ -22,7 +23,7 @@ public class Transpose {
         }
     }
 
-    public void changeTempo(int changeTempo){
+    public void changeTempo(int changeTempo) {
         midiFile.getTracks().stream()
                 .flatMap(midiTrack -> midiTrack.getEvents().stream())
                 .filter(midiEvent -> midiEvent instanceof Tempo)
@@ -30,21 +31,23 @@ public class Transpose {
                         .setBpm(((Tempo) tempo).getBpm() + ((Tempo) tempo).getBpm() * changeTempo / 100));
     }
 
-    public void changeTone(int tone){
+    public void changeTone(int tone) {
         midiFile.getTracks().stream()
                 .flatMap(midiTrack -> midiTrack.getEvents().stream())
                 .filter(midiEvent -> midiEvent instanceof NoteOn)
-                .forEach(noteOn -> ((NoteOn)noteOn).setNoteValue(((NoteOn)noteOn).getNoteValue() + tone));
+                .forEach(noteOn -> ((NoteOn) noteOn).setNoteValue(((NoteOn) noteOn).getNoteValue() + tone));
 
         midiFile.getTracks().stream()
                 .flatMap(midiTrack -> midiTrack.getEvents().stream())
                 .filter(midiEvent -> midiEvent instanceof NoteOff)
-                .forEach(noteOff -> ((NoteOff)noteOff).setNoteValue(((NoteOff)noteOff).getNoteValue() + tone));
+                .forEach(noteOff -> ((NoteOff) noteOff).setNoteValue(((NoteOff) noteOff).getNoteValue() + tone));
     }
-    public MidiFile getMidiFile(){
+
+    public MidiFile getMidiFile() {
         return midiFile;
     }
-    public void toFile(String fileName){
+
+    public void toFile(String fileName) {
         try {
             midiFile.writeToFile(new File(fileName));
         } catch (IOException e) {

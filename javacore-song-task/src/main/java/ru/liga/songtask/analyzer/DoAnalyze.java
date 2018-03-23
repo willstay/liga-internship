@@ -9,7 +9,7 @@ import java.util.Map;
 public class DoAnalyze {
     private final static StringBuilder stringBuilderOut = new StringBuilder();
 
-    public static String analyze(String fileName){
+    public static String analyze(String fileName) {
         SimpleMidiFile simpleMidiFile = new SimpleMidiFile(new Resources(fileName).getFile());
         NotesAnalyzer notesAnalyzer = new NotesAnalyzer(simpleMidiFile.vocalNoteList());
 
@@ -23,28 +23,28 @@ public class DoAnalyze {
         writeStringLn("<p>");
         writeStringLn("Анализ длительности нот (мс):");
 
-        for(Map.Entry<Long,Integer> duration : notesAnalyzer.analyzeDuration().entrySet()){
+        for (Map.Entry<Long, Integer> duration : notesAnalyzer.analyzeDuration().entrySet()) {
             writeStringLn(Math.round(duration.getKey() * simpleMidiFile.tickInMs()) + ": " + duration.getValue());
         }
 
         writeStringLn("<p>");
         writeStringLn("Анализ нот по высоте:");
 
-        for(Map.Entry<Note,Integer> note : notesAnalyzer.analyzeNotesHeight().entrySet()){
+        for (Map.Entry<Note, Integer> note : notesAnalyzer.analyzeNotesHeight().entrySet()) {
             writeStringLn(note.getKey().sign().fullName() + ": " + note.getValue());
         }
 
         writeStringLn("<p>");
         writeStringLn("Анализ интервалов:");
 
-        for(Map.Entry<Integer,Integer> note : notesAnalyzer.analyzeIntervals().entrySet()){
+        for (Map.Entry<Integer, Integer> note : notesAnalyzer.analyzeIntervals().entrySet()) {
             writeStringLn(note.getKey() + ": " + note.getValue());
         }
 
         return stringBuilderOut.toString();
     }
 
-    private static void writeStringLn(String text){
+    private static void writeStringLn(String text) {
         stringBuilderOut.append(text).append(System.getProperty("line.separator"));
     }
 }

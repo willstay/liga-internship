@@ -38,7 +38,7 @@ public class NotesAnalyzer {
     }
 
     public Map<Long, Integer> analyzeDuration() {
-         return notesList.stream()
+        return notesList.stream()
                 .map(note -> note.durationTicks())
                 .collect(Collectors.toMap(
                         i -> i,
@@ -52,7 +52,7 @@ public class NotesAnalyzer {
         List<Note> notesListCopy = new ArrayList<>(notesList);
         Map<Note, Integer> notesHeightMap = new TreeMap<>(NOTE_COMPARATOR_FREQUENCY.reversed());
         notesListCopy.stream()
-                .forEach(note -> notesHeightMap.merge(note,1,(oldValue, newValue) -> oldValue + newValue));
+                .forEach(note -> notesHeightMap.merge(note, 1, (oldValue, newValue) -> oldValue + newValue));
         return notesHeightMap;
     }
 
