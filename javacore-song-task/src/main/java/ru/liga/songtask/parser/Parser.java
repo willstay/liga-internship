@@ -10,6 +10,7 @@ import ru.liga.songtask.printer.PrintToFile;
 public class Parser {
     public static void parse(String[] args) {
         if (args.length == 0) {
+            System.out.println("enter parameters");
             return;
         }
 
