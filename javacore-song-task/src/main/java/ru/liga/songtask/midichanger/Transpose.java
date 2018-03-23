@@ -6,12 +6,14 @@ import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.meta.Tempo;
+import lombok.extern.slf4j.Slf4j;
 import ru.liga.songtask.resources.Resources;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class Transpose {
     private MidiFile midiFile;
 
@@ -19,6 +21,7 @@ public class Transpose {
         try {
             midiFile = new MidiFile(new Resources(fileName).getFile());
         } catch (IOException e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -51,6 +54,7 @@ public class Transpose {
         try {
             midiFile.writeToFile(new File(fileName));
         } catch (IOException e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         }
     }
