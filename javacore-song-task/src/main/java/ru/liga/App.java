@@ -1,6 +1,6 @@
 package ru.liga;
 
-import ru.liga.songtask.parser.Parser;
+import ru.liga.songtask.parser.JobFactory;
 
 /**
  * Всего нот: 15
@@ -29,6 +29,10 @@ import ru.liga.songtask.parser.Parser;
 
 public class App {
     public static void main(String[] args) {
-        Parser.parse(args);
+        if (args.length == 0) {
+            System.out.println("enter parameters");
+            return;
+        }
+        JobFactory.getJob(args).doJob();
     }
 }
