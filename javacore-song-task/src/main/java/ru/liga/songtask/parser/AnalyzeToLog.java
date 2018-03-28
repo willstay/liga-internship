@@ -5,13 +5,15 @@ import ru.liga.songtask.analyzer.DoAnalyze;
 import ru.liga.songtask.resources.Resources;
 
 @Slf4j
-public class AnalyzeToLog extends Job {
-    AnalyzeToLog(String[] args) {
-        super(args);
+public class AnalyzeToLog implements InterfaceJob {
+    private final String fileName;
+
+    AnalyzeToLog(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override
     public void doJob() {
-        log.info(new DoAnalyze(new Resources(args[0]).getFile()).analyze());
+        log.info(new DoAnalyze(new Resources(fileName).getFile()).analyze());
     }
 }

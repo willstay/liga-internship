@@ -5,14 +5,16 @@ import ru.liga.songtask.printer.Print;
 import ru.liga.songtask.printer.PrintToFile;
 import ru.liga.songtask.resources.Resources;
 
-public class AnalyzeToFile extends Job {
-    AnalyzeToFile(String[] args) {
-        super(args);
+public class AnalyzeToFile implements InterfaceJob {
+    private final String fileName;
+
+    AnalyzeToFile(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override
     public void doJob() {
-        Print printToFile = new PrintToFile(args[0] + ".txt");
-        printToFile.print(new DoAnalyze(new Resources(args[0]).getFile()).analyze());
+        Print printToFile = new PrintToFile(fileName + ".txt");
+        printToFile.print(new DoAnalyze(new Resources(fileName).getFile()).analyze());
     }
 }

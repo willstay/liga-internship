@@ -2,19 +2,24 @@ package ru.liga.songtask.parser;
 
 import ru.liga.songtask.midichanger.Transpose;
 
-public class ChangeMidi extends Job {
-    ChangeMidi(String[] args) {
-        super(args);
+public class ChangeMidi implements InterfaceJob {
+    private final String inputFileName;
+    private final String outputFileName;
+    private final int tone;
+    private final int tempo;
+
+    ChangeMidi(String inputFileName, String outputFileName, int tone, int tempo) {
+        this.inputFileName = inputFileName;
+        this.outputFileName = outputFileName;
+        this.tone = tone;
+        this.tempo = tempo;
     }
 
     @Override
     public void doJob() {
-        String outputName = args[0].substring(0, args[0].length() - 4);
-        outputName += args[2].toString() + args[3].toString() + args[4].toString() + args[5].toString() + ".mid";
-
-        Transpose transpose = new Transpose(args[0]);
-        transpose.changeTone(Integer.valueOf(args[3]));
-        transpose.changeTempo(Integer.valueOf(args[5]));
-        transpose.toFile(outputName);
+        Transpose transpose = new Transpose(inputFileName);
+        transpose.changeTone(tone);
+        transpose.changeTempo(tempo);
+        transpose.toFile(outputFileName);
     }
 }
