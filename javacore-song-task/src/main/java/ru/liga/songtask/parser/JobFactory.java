@@ -1,6 +1,7 @@
 package ru.liga.songtask.parser;
 
 import ru.liga.songtask.parser.exception.NoParameters;
+import ru.liga.songtask.parser.exception.NoCorrectParameters;
 
 public class JobFactory {
     public static InterfaceJob getJob(String[] args) {
@@ -23,6 +24,6 @@ public class JobFactory {
 
             return new ChangeMidi(args[0], outputName, Integer.valueOf(args[3]), Integer.valueOf(args[5]));
         }
-        throw new RuntimeException();
+        throw new NoCorrectParameters();
     }
 }
